@@ -1,0 +1,42 @@
+@charset "utf-8";
+
+*
+{
+	-mox-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+#content-wrapper
+{
+	margin: 0 20%;
+}
+
+.jsdb-container
+{
+	margin: 60px 0;
+	border: .15em solid #000000;
+	font-size: 2em;
+	background-color: #e6e6e6;
+}
+.jsdb-container.jsdb-unsortable
+{
+	background-color: #a6a6a6;
+}
+
+.jsdb-draggable
+{
+	padding: .5em;
+	text-align: center;
+}
+
+.jsdb-draggable.jsdb-drop-before
+{
+	border-top: .4em solid #606060;
+}
+
+.jsdb-draggable.jsdb-drop-after
+{
+	border-bottom: .4em solid #606060;
+}
+

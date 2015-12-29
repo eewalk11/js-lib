@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test: Dropbox</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css'>
+		<link type='text/css' rel='stylesheet' href='js-dropbox.css'>
+	</head>
+	<body>
+		<main id='content-wrapper'>
+			<div id='container1'></div>
+			<div id='container2'></div>
+		</main>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+		<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+		<script src='js-dropbox.min.js'></script>
+		<script>
+			/* global EeWalk11 */
+			;(function()
+			{
+				var Container = EeWalk11.Dropbox.Container;
+				var Draggable = EeWalk11.Dropbox.Draggable;
+
+				var container1 = new Container("container1", {
+					capacity: 6
+				});
+
+				var container2 = new Container("container2", {
+					capacity: 6,
+					sortable: false
+				});
+
+				var dragOpts = {
+					hoverOptions: {
+						css: {
+							color: "white",
+							backgroundColor: "black"
+						}
+					}
+				};
+
+				container2.add(new Draggable("Joe", dragOpts));
+				container2.add(new Draggable("Greg", dragOpts));
+				container2.add(new Draggable("Suzy", dragOpts));
+				container2.add(new Draggable("Mark", dragOpts));
+				container2.add(new Draggable("Theresa", dragOpts));
+				container2.add(new Draggable("Bob", dragOpts));
+
+				Container.setHeights();
+			})();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test: hoverAnimation</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css'>
+		<style>
+			#content-wrapper {width: 40%; margin: 6em auto;}
+			.hover {
+				margin: 2em;
+				border: .2em solid #000000;
+				padding: 2em;
+				font-size: 1.5em;
+				font-weight: bold;
+				text-align: center;
+				background-color: #606060;
+			}
+		</style>
+	</head>
+	<body>
+		<main id='content-wrapper'>
+			<div id='hover1' class='hover'>HOVER 1</div>
+			<div id='hover2' class='hover'>HOVER 2</div>
+			<div id='hover3' class='hover'>HOVER 3</div>
+			<div id='hover4' class='hover'>HOVER 4</div>
+		</main>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+		<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+		<script src='js-animate.min.js'></script>
+		<script>
+			/* global EeWalk11 */
+			;(function()
+			{
+				EeWalk11.Animate.hoverAnimation($(".hover:not(#hover4)"), {
+					css: {
+						color: "red",
+						backgroundColor: "#000",
+						borderColor: "#a6a6a6",
+						borderWidth: ".4em"
+					},
+					duration: 500,
+					interrupt: false,
+					leave: "animate"
+				});
+				EeWalk11.Animate.hoverAnimation("hover4");
+			})();
+		</script>
+	</body>
+</html>
