@@ -43,7 +43,7 @@
 		var data = EeWalk11.PrivateData.call(this, properties, options);
 		data.$elem = $elem;       //The DOM element for the Draggable
 		data.text = String(text); //The text to be displayed in this Draggable element
-		convertTypes(data);
+		convertTypes.call(this, data);
 		return data;
 	};
 
@@ -73,6 +73,7 @@
 		switch(property)
 		{
 			case "hoverOptions": return false;
+			case "dropped": return false;
 			default: throw new Error("Invalid Draggable constructor option: " + property);
 		}
 	};
@@ -93,7 +94,8 @@
 	 * Data object properties.
 	 */
 	var properties = [
-		"hoverOptions" //Settings for a jQuery UI hover animation
+		"hoverOptions", //Settings for a jQuery UI hover animation
+		"dropped"       //Function(s) to run on drop
 	];
 
 
@@ -114,7 +116,14 @@
 	 */
 	function convertTypes(data)
 	{
-		data.hoverOptions = typeof data.hoverOptions === "object" ? data.hoverOptions : false;
+		data.hoverOptions = typeof data.hoverOptions === "object" ?
+			data.hoverOptions : this.getDefaultValue("hoverOptions");
+
+		if(typeof data.dropped === "function")
+		{
+			data.dropped = [data.dropped];
+		}
+		data.dropped = Array.isArray(data.dropped) ? data.dropped : this.getDefaultValue("dropped");
 	}
 
 

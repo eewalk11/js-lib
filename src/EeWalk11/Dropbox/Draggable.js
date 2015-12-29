@@ -79,6 +79,29 @@
 
 
 	/**
+	 * Run each drop function provided in the constructor options.
+	 * @param {Boolean} validDrop True if this draggable was dropped in a valid drop location, false
+	 * otherwise.
+	 */
+	EeWalk11.Dropbox.Draggable.prototype.dropped = function(validDrop)
+	{
+		var dropped = draggableData[this.getDraggableId()].dropped;
+		if(Array.isArray(dropped))
+		{
+			for(var i = 0, len = dropped.length; i < len; i++)
+			{
+				var func = dropped[i];
+				if(typeof func === "function")
+				{
+					func.call(this, validDrop);
+				}
+			}
+		}
+	};
+
+
+
+	/**
 	 * Determine if a variable is an equivalent Draggable element.
 	 * <p>By default, the unique Draggable IDs will be compared.</p>
 	 * @param {EeWalk11.Dropbox.Draggable} cmp The variable to compare.

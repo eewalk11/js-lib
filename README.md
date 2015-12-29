@@ -82,6 +82,11 @@ enabled for Draggable elements. Set this to an options object (as defined for th
 *EeWalk11.Animate.hoverAnimation* function) to enable. Any other value will disable the animation.
 **Note.** An empty object will enable the animation, all default values for the animation options
 will be used. *Default is false*
+* *dropped {Function|Array|Boolean}* A function or an array of functions to run when the draggable
+element is dropped. Each function will be provided 1 argument; a boolean, true if the draggable was
+dropped in a valid drop location, false otherwise. **NOTE: Each function will be called with "this"
+pointing to the Draggable object that was dropped, not the DOM element.** False will cause no
+function to be run. *Default is false*
 
 
 

@@ -38,6 +38,18 @@
 
 
 	/**
+	 * @type {Function} Alias for the Container constructor.
+	 */
+	var Container = EeWalk11.Dropbox.Container;
+
+	/**
+	 * @type {Function} Alias for the Draggable constructor.
+	 */
+	var Draggable = EeWalk11.Dropbox.Draggable;
+
+
+
+	/**
 	 * @type {EeWalk11.Dropbox.Draggable} The source container of the dragged element in a drag &
 	 * drop event.
 	 */
@@ -141,11 +153,11 @@
 	{
 		//Transfer the element data
 		event.dataTransfer.setData(
-			"text/plain", EeWalk11.Dropbox.Draggable.getDraggable(event.target).getData()
+			"text/plain", Draggable.getDraggable(event.target).getData()
 		);
 
 		//Set the dragged element
-		srcDraggable = EeWalk11.Dropbox.Draggable.getDraggable(event.target.id);
+		srcDraggable = Draggable.getDraggable(event.target.id);
 		srcContainer = srcDraggable.getContainer();
 		srcIndex = srcContainer.getPosition(srcDraggable);
 
@@ -173,7 +185,13 @@
 		//Insert the dragged element
 		if(srcDraggable)
 		{
-			insertDraggedElement(event);
+			var validDrop = insertDraggedElement(event);
+			srcDraggable.dropped(validDrop);
+			if(validDrop)
+			{
+				//The dragend event will replace the dragged element if this is not run
+				clearSource();
+			}
 		}
 	};
 
@@ -202,18 +220,18 @@
 	/**
 	 * Insert the dragged element for a drop event.
 	 * @param {Event} event The event object.
+	 * @return {Boolean} True if the dragged element was added to the destination container, false
+	 * otherwise.
 	 */
 	function insertDraggedElement(event)
 	{
-		var inserted = false;
-
 		if(event.target.className.indexOf("jsdb-draggable") >= 0)
 		{
 			//If the container is sortable, insert the dragged element before the target
 			//Otherwise, use the dragged element's sort position
-			var dstDraggable = EeWalk11.Dropbox.Draggable.getDraggable(event.target);
+			var dstDraggable = Draggable.getDraggable(event.target);
 			var dstContainer = dstDraggable.getContainer();
-			inserted = dstContainer.isSortable() ?
+			return dstContainer.isSortable() ?
 				dstContainer.insert(srcDraggable, dstContainer.getPosition(dstDraggable))
 				: dstContainer.insert(srcDraggable,	dstContainer.getPosition(srcDraggable));
 		}
@@ -221,16 +239,10 @@
 		{
 			//If the container is sortable, insert the dragged element after the last element
 			//Otherwise, use the dragged element's sort position
-			var dstContainer = EeWalk11.Dropbox.Container.getContainer(event.target);
-			inserted = dstContainer.isSortable() ?
+			var dstContainer = Container.getContainer(event.target);
+			return dstContainer.isSortable() ?
 				dstContainer.add(srcDraggable)
 				: dstContainer.insert(srcDraggable, dstContainer.getPosition(srcDraggable));
-		}
-
-		//The dragend event will replace the dragged element unless the source was cleared
-		if(inserted)
-		{
-			clearSource();
 		}
 	}
 
@@ -265,7 +277,7 @@
 		{
 			//If the Container is sortable, the drop location is before the target
 			//Otherwise, the drop location is the dragged element's sort position
-			var dstDraggable = EeWalk11.Dropbox.Draggable.getDraggable(event.target);
+			var dstDraggable = Draggable.getDraggable(event.target);
 			var dstContainer = dstDraggable.getContainer();
 			dstContainer.isSortable() ?
 				updateDropLocation(dstDraggable)
@@ -276,7 +288,7 @@
 		{
 			//If the Container is sortable, the drop location is after the last element
 			//Otherwise, the drop loation is the dragged element's sort position
-			var dstContainer = EeWalk11.Dropbox.Container.getContainer(event.target);
+			var dstContainer = Container.getContainer(event.target);
 			dstContainer.isSortable() ?
 				updateDropLocation(dstContainer.get("last"), false)
 				: updateUnsortableDropLocation(dstContainer);

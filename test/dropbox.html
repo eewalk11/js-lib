@@ -37,6 +37,13 @@
 							color: "white",
 							backgroundColor: "black"
 						}
+					},
+					dropped: function(validDrop)
+					{
+						alert(
+							this.getElementId() + " " + (validDrop ? "was" : "was not")
+								+ " dropped in a valid location"
+						);
 					}
 				};
 
