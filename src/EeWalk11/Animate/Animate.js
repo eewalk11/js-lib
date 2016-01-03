@@ -1,4 +1,7 @@
 
 /* global EeWalk11 */
 
-EeWalk11.Animate = {};
+if(typeof EeWalk11.Animate === "undefined")
+{
+	EeWalk11.Animate = {};
+}

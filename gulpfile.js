@@ -49,6 +49,7 @@ function getSourceFiles(task)
 			//This will be included in all tasks
 			case "min-lib": return [
 				"src/EeWalk11/EeWalk11.js",
+				"src/EeWalk11/cookie.js",
 				"src/EeWalk11/elements.js",
 				"src/EeWalk11/numbers.js",
 				"src/EeWalk11/jquery.js",

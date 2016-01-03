@@ -1,4 +1,7 @@
 
 /* global EeWalk11 */
 
-EeWalk11.Dropbox = {};
+if(typeof EeWalk11.Dropbox === "undefined")
+{
+	EeWalk11.Dropbox = {};
+}

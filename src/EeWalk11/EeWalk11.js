@@ -1,2 +1,5 @@
 
-EeWalk11 = {};
+if(typeof EeWalk11 === "undefined")
+{
+	EeWalk11 = {};
+}
