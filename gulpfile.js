@@ -53,6 +53,7 @@ function getSourceFiles(task)
 				"src/EeWalk11/elements.js",
 				"src/EeWalk11/numbers.js",
 				"src/EeWalk11/jquery.js",
+				"src/EeWalk11/preloadImages.js",
 				"src/EeWalk11/PrivateData.js"
 			];
 			case "min-animate": return [
