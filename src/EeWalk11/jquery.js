@@ -50,7 +50,7 @@ EeWalk11.toJQuery = function(arg0, mults)
 
 	if(arg0 instanceof jQuery)
 	{
-		return mults || jQuery.length === 1 ? arg0 : false;
+		return mults || arg0.length === 1 ? arg0 : false;
 	}
 	if(EeWalk11.isElement(arg0))
 	{
