@@ -13,8 +13,7 @@
 	/*
 	 ———————————————————————————————————————————————————————————————————————————————————————————————
 	|
-	|	CONSTRUCTOR
-	|	Extends EeWalk11.PrivateData
+	|	PUBLIC FUNCTIONS
 	|
 	 ———————————————————————————————————————————————————————————————————————————————————————————————
 	 */
@@ -22,29 +21,43 @@
 
 
 	/**
-	 * A complete options object for a call to the hoverAnimation function.
-	 * @param {Object} options The options object provided to the function. If undefined or a type
-	 * other than Object, this will be treated as an empty object.
-	 * @return {Object} A new options object.
+	 * Scroll the window to an element.
+	 * @param {jQuery|Element|String} element The element or element ID of the element to scroll to.
+	 * @param {Object} options An optional options object. If undefined, default values will be
+	 * used. See README.md for details.
+	 * @throws {Error} If jQuery is undefined or the object is invalid.
 	 */
-	EeWalk11.Animate.HoverAnimationOptions = function(options)
+	EeWalk11.Animate.scrollTo = function(element, options)
 	{
-		var data = EeWalk11.PrivateData.call(this, properties, options);
-		convertTypes.call(this, data);
-		return data;
+		//Check for jQuery UI
+		if(!EeWalk11.isJQueryDefined())
+		{
+			throw new Error("jQuery is required for scroll animation");
+		}
+
+		//Get the element
+		var $element = EeWalk11.toJQuery(element);
+		if(!$element.length)
+		{
+			throw new Error("Invlid scroll target: " + element);
+		}
+
+		//Load the DOM window object and the get a complete options object
+		loadWindow();
+		options = new EeWalk11.Animate.ScrollOptions(options);
+
+		//Run the animation
+		$page.animate({
+			scrollTop: $element.offset().top
+		}, options.duration);
 	};
-
-
-
-	EeWalk11.Animate.HoverAnimationOptions.prototype =
-		Object.create(EeWalk11.PrivateData.prototype);
 
 
 
 	/*
 	 ———————————————————————————————————————————————————————————————————————————————————————————————
 	|
-	|	OVERRIDDEN METHODS
+	|	PUBLIC VARIABLES
 	|
 	 ———————————————————————————————————————————————————————————————————————————————————————————————
 	 */
@@ -52,21 +65,9 @@
 
 
 	/**
-	 * Get the default value for an option.
-	 * @param {String} property The data object's property name to get a default value for.
-	 * @returns {mixed} The value.
+	 * @type {Number} The default duration.
 	 */
-	EeWalk11.Animate.HoverAnimationOptions.prototype.getDefaultValue = function(property)
-	{
-		switch(property)
-		{
-			case "css": return {backgroundColor: EeWalk11.Animate.hoverAnimation.COLOR};
-			case "duration": return EeWalk11.Animate.hoverAnimation.DUR;
-			case "interrupt": return false;
-			case "leave": return "animate";
-			default: throw new Error("Invalid hover animation option: " + property);
-		}
-	};
+	EeWalk11.Animate.scrollTo.DUR = 750;
 
 
 
@@ -81,14 +82,9 @@
 
 
 	/**
-	 * Data object properties.
+	 * @type {jQuery} The window and document that will scroll will be stored here.
 	 */
-	var properties = [
-		"css",       //Css Object for the animation
-		"duration",  //The duration of the animation in milliseconds
-		"interrupt", //Should the animation finish when interrupted
-        "leave"      //What should be done when the mouse is no longer hovering
-	];
+	var $page;
 
 
 
@@ -103,19 +99,14 @@
 
 
 	/**
-	 * Convert options to expected types.
-	 * @param {Object} data The data object.
+	 * Load the window object. If already loaded, nothing will happen.
 	 */
-	function convertTypes(data)
+	function loadWindow()
 	{
-		data.css = typeof data.css === "object" ? data.css : this.getDefaultValue("css");
-		data.duration = parseInt(data.duration);
-		data.interrupt = Boolean(data.interrupt);
-		data.leave = typeof data.leave === "string"
-				&& data.leave.match(
-					/^(revert|animate(\[[0-9]+\])?|hold|toggle(\[([0-9]+|revert)\])?)$/
-				) ?
-			data.leave : this.getDefaultValue("leave");
+		if(!$page)
+		{
+			$page = $("html, body");
+		}
 	}
 
 

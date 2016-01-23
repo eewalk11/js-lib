@@ -50,6 +50,7 @@ function getSourceFiles(task)
 			case "min-lib": return [
 				"src/EeWalk11/EeWalk11.js",
 				"src/EeWalk11/cookie.js",
+				"src/EeWalk11/session.js",
 				"src/EeWalk11/elements.js",
 				"src/EeWalk11/numbers.js",
 				"src/EeWalk11/jquery.js",
@@ -58,8 +59,10 @@ function getSourceFiles(task)
 			];
 			case "min-animate": return [
 				"src/EeWalk11/Animate/Animate.js",
+				"src/EeWalk11/Animate/hoverAnimation.js",
+				"src/EeWalk11/Animate/scrollTo.js",
 				"src/EeWalk11/Animate/HoverAnimationOptions.js",
-				"src/EeWalk11/Animate/hoverAnimation.js"
+				"src/EeWalk11/Animate/ScrollOptions.js"
 			];
 			case "min-dropbox": return [
 				"src/EeWalk11/Dropbox/Dropbox.js",

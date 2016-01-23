@@ -10,6 +10,17 @@ ________________________________________________________________________________
 
 
 
+### Scroll Animation
+
+The *scrollTo* function will scroll the page so that an element is in view. jQuery is required for
+this animation to work.
+
+**Options**
+
+* *duration {Number}* The duration of the animation in milliseconds. *Default is 750*
+
+
+
 ### Hover Animation
 
 The *hoverAnimation* function can be used to create an animated color effect when hovering the mouse
