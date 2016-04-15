@@ -49,7 +49,7 @@
 		//Run the animation
 		$page.animate({
 			scrollTop: $element.offset().top
-		}, options.duration);
+		}, options.duration, options.finished);
 	};
 
 

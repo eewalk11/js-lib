@@ -60,6 +60,7 @@
 		switch(property)
 		{
 			case "duration": return EeWalk11.Animate.scrollTo.DUR;
+			case "finished": return function() {};
 			default: throw new Error("Invalid scroll option: " + property);
 		}
 	};
@@ -80,7 +81,8 @@
 	 * Data object properties.
 	 */
 	var properties = [
-		"duration" //The duration of the animation in milliseconds
+		"duration", //The duration of the animation in milliseconds
+		"finished"  //A callback to run when the animation is finished
 	];
 
 
@@ -102,6 +104,8 @@
 	function convertTypes(data)
 	{
 		data.duration = parseInt(data.duration);
+		data.finished = typeof data.finished === "function" ?
+			data.finished : this.getDefaultValue("finished");
 	}
 
 

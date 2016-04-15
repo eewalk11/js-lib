@@ -18,6 +18,8 @@ this animation to work.
 **Options**
 
 * *duration {Number}* The duration of the animation in milliseconds. *Default is 750*
+* *finished {Function}* A callback function to run when the animation is finished. *Default is an
+empty function*
 
 
 
