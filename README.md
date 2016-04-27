@@ -36,6 +36,9 @@ This can be used if the events are needed later (e.g., to remove the event from 
 * *css {Object}* A CSS Object to use for the animation. This should be an Object accepected by the
 jQuery *css* function. *Default is {backgroundColor: "#d6d6d6"}*
 * *duration {Number}* The duration of the animation in milliseconds. *Default is 500*
+* *find {String}* A jQuery selector. If provided, the jQuery.find method will be used with the
+given selector for applying the animation. This does not affect the element(s) that triggers the
+animation, only the element(s) that is/are animated. *Default is null*
 * *interrupt {Boolean}* Set to true to immediately finish an animation when the animation is
 interrupted, false to start the next animation from the current animation's state. *Default is
 false*

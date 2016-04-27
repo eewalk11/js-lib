@@ -1,12 +1,7 @@
 
 
 
-/* global EeWalk11 */
-
-
-
-;(function()
-{
+;(function() {
 
 
 
@@ -31,11 +26,9 @@
 	 * @throws {Error} If jQuery UI is not defined, the element is invalid, or there is an invalid
 	 * CSS property in the options Object.
 	 */
-	EeWalk11.Animate.hoverAnimation = function(element, options)
-	{
+	EeWalk11.Animate.hoverAnimation = function(element, options) {
 		//Check for jQuery UI
-		if(!EeWalk11.isJQueryUIDefined())
-		{
+		if(!EeWalk11.isJQueryUIDefined()) {
 			throw new Error("jQuery UI is required to create a hover animation");
 		}
 
@@ -46,10 +39,13 @@
 		options = new EeWalk11.Animate.HoverAnimationOptions(options);
 		parseLeaveDuration(options);
 
+		//If the "find" option was provided, set the element(s) to animate
+		var $animate = options.find ? $elem.find(options.find) : $elem;
+
 		//Apply mouse events
 		var ret = {
-			mouseenter: getMouseenter(options),
-			mouseleave: getMouseleave(options)
+			mouseenter: getMouseenter(options, $elem, $animate),
+			mouseleave: getMouseleave(options, $elem, $animate)
 		};
 		$elem.on("mouseenter", ret.mouseenter);
 		$elem.on("mouseleave", ret.mouseleave);
@@ -61,7 +57,7 @@
 	/*
 	 ———————————————————————————————————————————————————————————————————————————————————————————————
 	|
-	|	PUBLIC VARIABLES
+	|	PUBLIC CONSTANTS
 	|
 	 ———————————————————————————————————————————————————————————————————————————————————————————————
 	 */
@@ -83,7 +79,7 @@
 	/*
 	 ———————————————————————————————————————————————————————————————————————————————————————————————
 	|
-	|	PRIVATE VARIABLES
+	|	PRIVATE FUNCTIONS
 	|
 	 ———————————————————————————————————————————————————————————————————————————————————————————————
 	 */
@@ -97,8 +93,7 @@
 	 * @param {Number|Boolean} duration The animation duration in milliseconds, false for no
 	 * animation.
 	 */
-	function changeCss($element, css, duration)
-	{
+	function changeCss($element, css, duration) {
 		duration ? $element.animate(css, duration) : $element.css(css);
 	}
 
@@ -107,31 +102,27 @@
 	/**
 	 * Get the mouseenter event.
 	 * @param {Object} options The options object.
+	 * @param {jQuery} $hover The element that the hover is applied to.
+	 * @param {jQuery} $animate The element that the animation is applied to.
 	 * @return {Object} The event function.
 	 */
-	function getMouseenter(options)
-	{
-		return function()
-		{
-			var $this = jQuery(this);
-			if(!$this.data("jsanimateHoverState"))
-			{
-				//Create a data attribute to store the element's state
-				$this.data("jsanimateHoverState", "initial");
-				$this.data("jsanimateHoverInit", JSON.stringify(getStyles($this, options)));
+	function getMouseenter(options, $hover, $animate) {
+		return function(event) {
+			if(!$hover.data("jsanimateHoverState")) {
+				//Create data attributes to store the element's state
+				$hover.data("jsanimateHoverState", "initial");
+				$hover.data("jsanimateHoverInit", JSON.stringify(getStyles($animate, options)));
 			}
 			var revert = options.leave === "toggle"
-				&& $this.data("jsanimateHoverState") === "complete";
+					&& $hover.data("jsanimateHoverState") === "complete";
 
-			options.interrupt ? $this.finish() : $this.stop();
+			options.interrupt ? $animate.finish() : $animate.stop();
 
-			changeCss(
-				$this,
-				revert ? JSON.parse($this.data("jsanimateHoverInit")) : options.css,
-				revert ? options.leaveDuration : options.duration
-			);
+			changeCss($animate,
+					revert ? JSON.parse($hover.data("jsanimateHoverInit")) : options.css,
+					revert ? options.leaveDuration : options.duration);
 
-			$this.data("jsanimateHoverState", revert ? "initial" : "complete");
+			$hover.data("jsanimateHoverState", revert ? "initial" : "complete");
 		};
 	}
 
@@ -140,27 +131,21 @@
 	/**
 	 * Get the mouseleave event.
 	 * @param {Object} options The options object.
+	 * @param {jQuery} $hover The element that the hover is applied to.
+	 * @param {jQuery} $animate The element that the animation is applied to.
 	 * @return {Object} The event function.
 	 */
-	function getMouseleave(options)
-	{
-		return function()
-		{
-			if(options.leave === "revert" || options.leave === "animate")
-			{
-				var $this = jQuery(this);
-				if($this.data("jsanimateHoverState"))
-				{
+	function getMouseleave(options, $hover, $animate) {
+		return function(event) {
+			if(options.leave === "revert" || options.leave === "animate") {
+				if($hover.data("jsanimateHoverState")) {
 					//Only run this animation if the mouseenter animation has run
-					options.interrupt ? $this.finish() : $this.stop();
+					options.interrupt ? $animate.finish() : $animate.stop();
 
-					changeCss(
-						$this,
-						JSON.parse($this.data("jsanimateHoverInit")),
-						options.leaveDuration
-					);
+					changeCss($animate, JSON.parse($hover.data("jsanimateHoverInit")),
+							options.leaveDuration);
 
-					$this.data("jsanimateHoverState", "initial");
+					$hover.data("jsanimateHoverState", "initial");
 				}
 			}
 		};
@@ -175,16 +160,13 @@
 	 * @return {Object} CSS Object.
 	 * @throws {Error} If there is an invalid CSS property in the options Object.
 	 */
-	function getStyles($elem, options)
-	{
+	function getStyles($elem, options) {
 		var ret = {};
 		var props = Object.getOwnPropertyNames(options.css);
-		for(var i = 0, len = props.length; i < len; i++)
-		{
+		for(var i = 0, len = props.length; i < len; i++) {
 			var prop = props[i];
 			var val = $elem.css(prop);
-			if(typeof val === "undefined")
-			{
+			if(typeof val === "undefined") {
 				throw new Error("Invalid css property: " + prop);
 			}
 			ret[prop] = val;
@@ -201,29 +183,23 @@
 	 * the value will be false.</p>
 	 * @param {Object} options The options object.
 	 */
-	function parseLeaveDuration(options)
-	{
-		if(options.leave.match(/^(animate|toggle)/))
-		{
-			if(options.leave.match(/\[.*\]/))
-			{
+	function parseLeaveDuration(options) {
+		if(options.leave.match(/^(animate|toggle)/)) {
+			if(options.leave.match(/\[.*\]/)) {
 				//Set the duration of the animation
 				var val = options.leave.substring(
-					options.leave.indexOf("[") + 1, options.leave.length - 1
-				);
+						options.leave.indexOf("[") + 1, options.leave.length - 1);
 				options.leaveDuration = val === "revert" ? false : parseInt(val);
 
 				//Strip optional [] from "leave"
 				options.leave = options.leave.substring(0, options.leave.indexOf("["));
 			}
-			else
-			{
+			else {
 				//Use duration setting
 				options.leaveDuration = options.duration;
 			}
 		}
-		else
-		{
+		else {
 			//No animation
 			options.leaveDuration = false;
 		}

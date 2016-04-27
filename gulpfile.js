@@ -1,3 +1,6 @@
+
+
+
 /*
  * Combine and minify JS files.
  *
@@ -29,23 +32,18 @@ var argv = yargs.argv;
 
 
 //Get source files for an array of tasks
-function getSourceFiles(task)
-{
-	if(Array.isArray(task))
-	{
+function getSourceFiles(task) {
+	if(Array.isArray(task)) {
 		//Concatenate arrays of sources
 		var src = [];
-		for(var i = 0, len = task.length; i < len; i++)
-		{
+		for(var i = 0, len = task.length; i < len; i++) {
 			src = src.concat(getSourceFiles(task[i]));
 		}
 		return src;
 	}
-	else
-	{
+	else {
 		//Get an array of sources for a given task
-		switch(task)
-		{
+		switch(task) {
 			//This will be included in all tasks
 			case "min-lib": return [
 				"src/EeWalk11/EeWalk11.js",
@@ -80,10 +78,8 @@ function getSourceFiles(task)
 
 
 //Get the ouptut filename for a task
-function getFilename(task)
-{
-	switch(task)
-	{
+function getFilename(task) {
+	switch(task) {
 		case "min-lib": return "js-lib.min.js";
 		case "min-animate": return "js-animate.min.js";
 		case "min-dropbox": return "js-dropbox.min.js";
@@ -94,16 +90,14 @@ function getFilename(task)
 
 
 //Run the minify task given the Gulp src
-function run_minify(task, src)
-{
+function run_minify(task, src) {
 	console.log("combining");
 	var g = src.pipe(concat(getFilename(task)));
-	if(!argv.hasOwnProperty("nougly"))
-	{
+	if(!argv.hasOwnProperty("nougly")) {
 		console.log("minifying");
 		g = g.pipe(uglify());
 	}
-	g = g.pipe(gulp.dest("min"));
+	return g.pipe(gulp.dest("min"));
 }
 
 
@@ -119,36 +113,29 @@ function run_minify(task, src)
 
 
 //Run all minifications
-gulp.task("default", ["min-lib", "min-animate", "min-dropbox"], function() {});
+gulp.task("default", ["min-lib", "min-animate", "min-dropbox"]);
 
 
 
 //Minify the entire package
-gulp.task("min-lib", function()
-{
-	return run_minify("min-lib", gulp.src(
-		getSourceFiles(["min-lib", "min-animate", "min-dropbox"]))
-	);
+gulp.task("min-lib", function() {
+	return run_minify("min-lib",
+			gulp.src(getSourceFiles(["min-lib", "min-animate", "min-dropbox"])));
 });
 
 
 
 //Minify the Animate libraray
-gulp.task("min-animate", function()
-{
-	return run_minify("min-animate", gulp.src(
-		getSourceFiles(["min-lib", "min-animate"]))
-	);
+gulp.task("min-animate", function() {
+	return run_minify("min-animate", gulp.src(getSourceFiles(["min-lib", "min-animate"])));
 });
 
 
 
 //Minify the Dropbox library
-gulp.task("min-dropbox", function()
-{
-	return run_minify("min-dropbox", gulp.src(
-		getSourceFiles(["min-lib", "min-animate", "min-dropbox"])
-	));
+gulp.task("min-dropbox", function() {
+	return run_minify("min-dropbox",
+			gulp.src(getSourceFiles(["min-lib", "min-animate", "min-dropbox"])));
 });
 
 

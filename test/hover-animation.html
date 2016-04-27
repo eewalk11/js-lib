@@ -23,7 +23,7 @@
 			<div id='hover1' class='hover'>HOVER 1</div>
 			<div id='hover2' class='hover'>HOVER 2</div>
 			<div id='hover3' class='hover'>HOVER 3</div>
-			<div id='hover4' class='hover'>HOVER 4</div>
+			<div id='hover4' class='hover'>HOVER <span>4</span></div>
 		</main>
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
 		<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
@@ -43,7 +43,7 @@
 					interrupt: false,
 					leave: "animate"
 				});
-				EeWalk11.Animate.hoverAnimation("hover4");
+				EeWalk11.Animate.hoverAnimation("hover4", {find: "span"});
 			})();
 		</script>
 	</body>
