@@ -1,101 +1,59 @@
 
 
 
-/* global EeWalk11 */
-
-
-
-;(function()
-{
-
-
-
-	/*
-	 ———————————————————————————————————————————————————————————————————————————————————————————————
-	|
-	|	CONSTRUCTOR
-	|
-	 ———————————————————————————————————————————————————————————————————————————————————————————————
-	 */
+;(function() {
 
 
 
 	/**
 	 * Construct a new private data Object for hold another Object's data.
-	 * @param {Array} properties An array of property names for this data object. If undefined or a
-	 * type other that Array, this will be treated as an empty array.
-	 * @param {Object} options The values of any properties defined in this Object that appear in
-	 * the properites Array will be used for the data Object.
-	 * @return {Object} A new private data object.
+	 * @param {Array}   props  An array of property names for this data object. If undefined or a
+	 *                         type other that Array, this will be treated as an empty array.
+	 * @param {Object}  opts   The values of any properties defined in this Object that appear in
+	 *                         the properites Array will be used for the data Object.
+	 * @return {Object}  A new private data object.
 	 */
-	EeWalk11.PrivateData = function(properties, options)
-	{
-		if(!Array.isArray(properties))
-		{
-			properties = [];
+	EeWalk11.PrivateData = function(props, opts) {
+		if(!Array.isArray(props)) {
+			props = [];
 		}
-		if(typeof options !== "object")
-		{
-			options = {};
+		if(typeof options !== "object") {
+			opts = {};
 		}
 
 		var data = {};
-		for(var i = 0, len = properties.length; i < len; i++)
-		{
-			var property = properties[i];
-			data[property] = getPropertyValue.call(this, property, options);
+		for(var i = 0, len = props.length; i < len; i++) {
+			var property   = props[i];
+			data[property] = getPropertyValue.call(this, property, opts);
 		}
 		return data;
 	};
 
 
 
-	/*
-	 ———————————————————————————————————————————————————————————————————————————————————————————————
-	|
-	|	METHODS
-	|
-	 ———————————————————————————————————————————————————————————————————————————————————————————————
-	 */
-
-
 
 	/**
-	 * Get the default value for a constructor option.
-	 * <p>By default, false will always be returned. An extending prototype should override this
-	 * method.</p>
-	 * @param {String} property The data object's property name to get a default value for.
-	 * @returns {Boolean} False.
+	 * Get the default value for a constructor option. By default, false will always be returned. An
+	 * extending prototype should override this method.
+	 * @param {String}  property  The data object's property name to get a default value for.
+	 * @returns {Boolean}  False.
 	 */
-	EeWalk11.PrivateData.prototype.getDefaultValue = function(property)
-	{
+	EeWalk11.PrivateData.prototype.getDefaultValue = function(property) {
 		return false;
 	};
 
 
 
-	/*
-	 ———————————————————————————————————————————————————————————————————————————————————————————————
-	|
-	|	PRIVATE FUNCTIONS
-	|
-	 ———————————————————————————————————————————————————————————————————————————————————————————————
-	 */
-
-
-
 	/**
-	 * Get a value for a constructor option.
-	 * <p>If a value is set in the options object, it will be used. Otherwise, the default value
-	 * will be used.</p>
-	 * @param {String} property The data object's property name to get a value for.
-	 * @param {Object} options Constructor options.
-	 * @returns {mixed} The value.
+	 * Get a value for a constructor option. If a value is set in the options object, it will be
+	 * used. Otherwise, the default value will be used.
+	 * @this EeWalk11.PrivateData
+	 * @param {String}  prop  The data object's property name to get a value for.
+	 * @param {Object}  opts  Constructor options.
+	 * @returns {mixed}  The value.
 	 */
-	function getPropertyValue(property, options)
-	{
-		return options.hasOwnProperty(property) ?
-		options[property] : this.getDefaultValue(property);
+	function getPropertyValue(prop, opts) {
+		return opts.hasOwnProperty(prop) ? opts[prop] : this.getDefaultValue(prop);
 	}
 
 
