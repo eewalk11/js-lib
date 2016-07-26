@@ -6,14 +6,6 @@
 
 
 	/**
-	 * The default scroll animation duration.
-	 * @type {Number}
-	 */
-	EeWalk11.Animate.scrollTo.DUR = 750;
-
-
-
-	/**
 	 * The window and document that will scroll will be stored here.
 	 * @type {jQuery}
 	 */
@@ -49,6 +41,14 @@
 			scrollTop: $element.offset().top
 		}, opts.duration, opts.finished);
 	};
+	
+	
+	
+	/**
+	 * The default scroll animation duration.
+	 * @type {Number}
+	 */
+	EeWalk11.Animate.scrollTo.DUR = 750;
 
 
 

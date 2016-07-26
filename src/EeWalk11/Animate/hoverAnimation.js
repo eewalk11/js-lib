@@ -6,20 +6,6 @@
 
 
 	/**
-	 * The default background color to be used if one is not specified.
-	 * @type {String}
-	 */
-	EeWalk11.Animate.hoverAnimation.COLOR = "#d6d6d6";
-
-	/**
-	 * The default number of milliseconds that the animation will last.
-	 * @type {Number}
-	 */
-	EeWalk11.Animate.hoverAnimation.DUR = 500;
-
-
-
-	/**
 	 * Apply a hover animation to an element.
 	 * @param {jQuery|HTMLElement|String}  elem  The element or element ID to apply the animation
 	 *                                           to. A jQuery element with multiple elements is
@@ -57,6 +43,20 @@
 		$elem.on("mouseleave", ret.mouseleave);
 		return ret;
 	};
+	
+	
+	
+	/**
+	 * The default background color to be used if one is not specified.
+	 * @type {String}
+	 */
+	EeWalk11.Animate.hoverAnimation.COLOR = "#d6d6d6";
+
+	/**
+	 * The default number of milliseconds that the animation will last.
+	 * @type {Number}
+	 */
+	EeWalk11.Animate.hoverAnimation.DUR = 500;
 
 
 
