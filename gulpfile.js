@@ -12,22 +12,12 @@
 
 
 
-var yargs = require("yargs");
-var gulp = require("gulp");
+var yargs  = require("yargs");
+var gulp   = require("gulp");
 var concat = require("gulp-concat");
 var uglify = require("gulp-uglify");
 
-var argv = yargs.argv;
-
-
-
-/*
- ———————————————————————————————————————————————————————————————————————————————————————————————————
-|
-|	FUNCTIONS
-|
- ———————————————————————————————————————————————————————————————————————————————————————————————————
- */
+var argv   = yargs.argv;
 
 
 
@@ -53,7 +43,10 @@ function getSourceFiles(task) {
 				"src/EeWalk11/numbers.js",
 				"src/EeWalk11/jquery.js",
 				"src/EeWalk11/preloadImages.js",
-				"src/EeWalk11/PrivateData.js"
+				"src/EeWalk11/PrivateData.js",
+				
+				"src/EeWalk11/Event/Event.js",
+				"src/EeWalk11/Event/resizeEvent.js"
 			];
 			case "min-animate": return [
 				"src/EeWalk11/Animate/Animate.js",
@@ -80,10 +73,10 @@ function getSourceFiles(task) {
 //Get the ouptut filename for a task
 function getFilename(task) {
 	switch(task) {
-		case "min-lib": return "js-lib.min.js";
+		case "min-lib":     return "js-lib.min.js";
 		case "min-animate": return "js-animate.min.js";
 		case "min-dropbox": return "js-dropbox.min.js";
-		default: throw new Error("Invalid task name: " + task);
+		default:            throw new Error("Invalid task name: " + task);
 	}
 }
 
@@ -103,11 +96,7 @@ function run_minify(task, src) {
 
 
 /*
- ———————————————————————————————————————————————————————————————————————————————————————————————————
-|
-|	TASKS
-|
- ———————————————————————————————————————————————————————————————————————————————————————————————————
+ * TASKS
  */
 
 
