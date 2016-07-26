@@ -17,7 +17,7 @@
 		if(!Array.isArray(props)) {
 			props = [];
 		}
-		if(typeof options !== "object") {
+		if(typeof opts !== "object") {
 			opts = {};
 		}
 
