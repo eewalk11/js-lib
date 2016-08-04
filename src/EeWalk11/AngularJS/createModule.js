@@ -3,12 +3,36 @@
 
 /**
  * Create the AngularJS module.
+ * @param {String}  name  The module name. Defaults to "eewalk11".
+ * @param {Array}   deps  Module dependencies. Defaults to an empty array.
  * @return {Object}  The module.
  */
-function createModule() {
-	var app = angular.module("eewalk11", []);
+function createModule(name, deps) {
+	createModule_init();
+	
+	var app = angular.module(name, deps);
 	registerFilters(app);
+	
+	createModule_cleanup();
 	return app;
+}
+
+
+
+/**
+ * Clear references to module data.
+ */
+function createModule_cleanup() {
+	delete __angularData.filters;
+}
+
+
+
+/**
+ * Initialize the module data object.
+ */
+function createModule_init() {
+	__angularData.filters = new __FilterData();
 }
 
 
@@ -35,10 +59,13 @@ function createProviderArgument(dependencies, factory) {
  * @param {Object}  app  The module.
  */
 function registerFilters(app) {
-	for(var i = 0, len = __filters.names.length; i < len; i++) {
-		var name = __filters.names[i];
-		var data = __filters[name];
+	var filters = __angularData.filters;
+	
+	for(var i = 0, len = filters.names.length; i < len; i++) {
+		var name = filters.names[i];
+		var data = filters[name];
 		var arg1 = createProviderArgument(data.dependencies, data.factory);
+		
 		app.filter(name, arg1);
 	}
 }

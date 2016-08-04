@@ -3,6 +3,6 @@
 module.exports = {
 	lib:       ["lib", "animate", "angularjs", "dropbox"],
 	animate:   ["lib", "animate"],
-	angularjs: ["angularjs"],
+	angularjs: ["lib", "angularjs"],
 	dropbox:   ["lib", "animate", "dropbox"]
 };

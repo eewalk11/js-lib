@@ -49,7 +49,7 @@ EeWalk11.stripLeadingZeros = function(str) {
  * @param {String}  str  The string.
  * @return {String}  The result. The argument will simply be returned if it is not a string.
  */
-EeWalk11.stringTrailingZeros = function(str) {
+EeWalk11.stripTrailingZeros = function(str) {
 	if(typeof str === "string" && str.indexOf(".") >= 0) {
 		str = str.replace(/[0]+$/, "");
 		if(str.charAt(str.length - 1) === ".") {
@@ -72,7 +72,7 @@ EeWalk11.stringTrailingZeros = function(str) {
  * @return {String}  The result. The argument will simply be returned if it is not a string.
  */
 EeWalk11.stripZeros = function(str) {
-	return stripTrailingZeros(stripLeadingZeros(str));
+	return EeWalk11.stripTrailingZeros(EeWalk11.stripLeadingZeros(str));
 }
 
 
