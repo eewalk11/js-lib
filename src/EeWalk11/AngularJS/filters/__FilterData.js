@@ -7,6 +7,7 @@
  * @constructor
  */
 function __FilterData() {
+	__ProviderData.call(this);
 	this.push("numToStr", false, __filterFactories.numToStr);
 };
 

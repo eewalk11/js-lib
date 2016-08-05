@@ -24,11 +24,15 @@ module.exports = {
 	
 	angularjs: [
 		"src/EeWalk11/AngularJS/__open.js",
-		"src/EeWalk11/AngularJS/ProviderData.js",
+		"src/EeWalk11/AngularJS/__ProviderData.js",
 		
-		"src/EeWalk11/AngularJS/filters/FilterData.js",
-		"src/EeWalk11/AngularJS/filters/filterFactories.js",
+		"src/EeWalk11/AngularJS/filters/__FilterData.js",
+		"src/EeWalk11/AngularJS/filters/__filterFactories.js",
 		"src/EeWalk11/AngularJS/filters/*.js",
+		
+		"src/EeWalk11/AngularJS/directives/__DirectiveData.js",
+		"src/EeWalk11/AngularJS/directives/__directiveFactories.js",
+		"src/EeWalk11/AngularJS/directives/*.js",
 		
 		"src/EeWalk11/AngularJS/createModule.js",
 		"src/EeWalk11/AngularJS/__close.js",

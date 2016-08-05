@@ -6,15 +6,9 @@
  * module.
  * @constructor
  */
-function __ProviderData() {};
-
-
-
-/**
- * A list of all property names.
- * @type {Array}
- */
-__ProviderData.prototype.names = [];
+function __ProviderData() {
+	this.names = []; //A list of all property names
+};
 
 
 
