@@ -20,13 +20,13 @@
 	 */
 	EeWalk11.Animate.hoverAnimation = function(elem, opts) {
 		//Check for jQuery UI
-		if(!EeWalk11.isJQueryUIDefined()) {
+		if(!EeWalk11.jQuery.isJQueryUIDefined()) {
 			throw new Error("jQuery UI is required to create a hover animation");
 		}
 
 		//Get the element(s) and a full options object
 		//NOTE: parseLeaveDuration strips optional [] from the "leave" property
-		var $elem = EeWalk11.toJQuery(elem, true);
+		var $elem = EeWalk11.jQuery.toJQuery(elem, true);
 
 		opts = new EeWalk11.Animate.HoverAnimationOptions(opts);
 		parseLeaveDuration(opts);
@@ -43,9 +43,9 @@
 		$elem.on("mouseleave", ret.mouseleave);
 		return ret;
 	};
-	
-	
-	
+
+
+
 	/**
 	 * The default background color to be used if one is not specified.
 	 * @type {String}

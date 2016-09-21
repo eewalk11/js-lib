@@ -45,7 +45,7 @@ EeWalk11.toElementId = function(arg0) {
 	if(EeWalk11.isElement(arg0)) {
 		return arg0.id;
 	}
-	if(EeWalk11.isJQueryDefined() && arg0 instanceof jQuery) {
+	if(EeWalk11.jQuery.isJQueryDefined() && arg0 instanceof jQuery) {
 		return arg0.length === 1 ? arg0.attr("id") : false;
 	}
 	return false;

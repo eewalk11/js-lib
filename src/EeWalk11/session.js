@@ -17,7 +17,7 @@
 	 *                                   the frequency of the AJAX reqeuests. Defaults to 5 minutes.
 	 */
 	EeWalk11.refreshSession = function(url, interval) {
-		if(!EeWalk11.isJQueryDefined()) {
+		if(!EeWalk11.jQuery.isJQueryDefined()) {
 			throw new Error("jQuery is required for a session refresh request");
 		}
 		if(!url) {

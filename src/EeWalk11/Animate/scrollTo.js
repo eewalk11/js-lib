@@ -22,12 +22,12 @@
 	 */
 	EeWalk11.Animate.scrollTo = function(elem, opts) {
 		//Check for jQuery UI
-		if(!EeWalk11.isJQueryDefined()) {
+		if(!EeWalk11.jQuery.isJQueryDefined()) {
 			throw new Error("jQuery is required for scroll animation");
 		}
 
 		//Get the element
-		var $element = EeWalk11.toJQuery(elem);
+		var $element = EeWalk11.jQuery.toJQuery(elem);
 		if(!$element.length) {
 			throw new Error("Invlid scroll target: " + elem);
 		}
@@ -41,9 +41,9 @@
 			scrollTop: $element.offset().top
 		}, opts.duration, opts.finished);
 	};
-	
-	
-	
+
+
+
 	/**
 	 * The default scroll animation duration.
 	 * @type {Number}
