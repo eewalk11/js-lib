@@ -12,7 +12,7 @@ EeWalk11.jQuery.jqLoop = function(jq, action) {
 		throw new Error("Invalid action");
 	}
 
-	var $elems = EeWalk11.jQuery.toJQuery(jq);
+	var $elems = EeWalk11.jQuery.toJQuery(jq, true);
 	if($elems) {
 		for(var i = 0; i < $elems.length; i++) {
 			action($elems.eq(i));
