@@ -35,7 +35,7 @@
 	 * @throws {Error}  If jQuery is not defined or the event is invalid.
 	 */
 	EeWalk11.Event.resizeEvent = function(event, delay) {
-		if(!EeWalk11.jQuery.isJQueryUIDefined()) {
+		if(!EeWalk11.jQuery.isJQueryDefined()) {
 			throw new Error("jQuery is required to register a resize event");
 		}
 		if(typeof event !== "function") {
