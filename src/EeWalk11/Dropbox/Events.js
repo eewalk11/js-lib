@@ -179,6 +179,16 @@
 	 */
 	EeWalk11.Dropbox.Events.onDrop = function(event)
 	{
+		/**
+		 * Handle Firefox redirection bug
+		 * @link https://stackoverflow.com/a/14542233
+		 */
+		if(event.preventDefault) {
+			event.preventDefault();
+		}
+		if(event.stopPropagation) {
+			event.stopPropagation();
+		}
 		//Clear the drop location
 		updateDropLocation();
 
