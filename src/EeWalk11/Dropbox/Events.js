@@ -179,6 +179,16 @@
 	 */
 	EeWalk11.Dropbox.Events.onDrop = function(event)
 	{
+		/**
+		 * Handle Firefox redirection bug
+		 * @link https://stackoverflow.com/a/14542233
+		 */
+		if(event.preventDefault) {
+			event.preventDefault();
+		}
+		if(event.stopPropagation) {
+			event.stopPropagation();
+		}
 		//Clear the drop location
 		updateDropLocation();
 
@@ -225,21 +235,23 @@
 	 */
 	function insertDraggedElement(event)
 	{
-		if(event.target.className.indexOf("jsdb-draggable") >= 0)
+		var target = event.target;
+
+		if(isHtmlDivElement(target) && target.className.indexOf("jsdb-draggable") >= 0)
 		{
 			//If the container is sortable, insert the dragged element before the target
 			//Otherwise, use the dragged element's sort position
-			var dstDraggable = Draggable.getDraggable(event.target);
+			var dstDraggable = Draggable.getDraggable(target);
 			var dstContainer = dstDraggable.getContainer();
 			return dstContainer.isSortable() ?
 				dstContainer.insert(srcDraggable, dstContainer.getPosition(dstDraggable))
 				: dstContainer.insert(srcDraggable,	dstContainer.getPosition(srcDraggable));
 		}
-		else if(event.target.className.indexOf("jsdb-container") >= 0)
+		else if(isHtmlDivElement(target) && target.className.indexOf("jsdb-container") >= 0)
 		{
 			//If the container is sortable, insert the dragged element after the last element
 			//Otherwise, use the dragged element's sort position
-			var dstContainer = Container.getContainer(event.target);
+			var dstContainer = Container.getContainer(target);
 			return dstContainer.isSortable() ?
 				dstContainer.add(srcDraggable)
 				: dstContainer.insert(srcDraggable, dstContainer.getPosition(srcDraggable));
@@ -273,22 +285,24 @@
 	 */
 	function setDropLocation(event)
 	{
-		if(event.target.className.indexOf("jsdb-draggable") >= 0)
+		var target = event.target;
+
+		if(isHtmlDivElement(target) && target.className.indexOf("jsdb-draggable") >= 0)
 		{
 			//If the Container is sortable, the drop location is before the target
 			//Otherwise, the drop location is the dragged element's sort position
-			var dstDraggable = Draggable.getDraggable(event.target);
+			var dstDraggable = Draggable.getDraggable(target);
 			var dstContainer = dstDraggable.getContainer();
 			dstContainer.isSortable() ?
 				updateDropLocation(dstDraggable)
 				: updateUnsortableDropLocation(dstContainer);
 			return true;
 		}
-		else if(event.target.className.indexOf("jsdb-container") >= 0)
+		else if(isHtmlDivElement(target) && target.className.indexOf("jsdb-container") >= 0)
 		{
 			//If the Container is sortable, the drop location is after the last element
 			//Otherwise, the drop loation is the dragged element's sort position
-			var dstContainer = Container.getContainer(event.target);
+			var dstContainer = Container.getContainer(target);
 			dstContainer.isSortable() ?
 				updateDropLocation(dstContainer.get("last"), false)
 				: updateUnsortableDropLocation(dstContainer);
@@ -353,6 +367,18 @@
 		position === dstContainer.getLength() ?
 			updateDropLocation(dstContainer.get(position - 1), false)
 			: updateDropLocation(dstContainer.get(position));
+	}
+
+
+
+	/**
+	 * Check for instance of HTMLDivElement. This prevents a TypeError when className property of event target objects
+	 * that are Text instances within an HTML div element.
+	 * @param {Object} obj
+	 * @return bool
+	 */
+	function isHtmlDivElement(obj) {
+		return obj instanceof HTMLDivElement;
 	}
 
 
